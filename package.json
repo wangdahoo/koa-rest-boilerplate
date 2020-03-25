@@ -1,0 +1,82 @@
+{
+    "name": "koa-rest-boilerplate",
+    "description": "",
+    "version": "0.1.0",
+    "main": "index.js",
+    "repository": "git@github.com:wangdahoo/koa-rest-boilerplate.git",
+    "author": "王大虎 <157195705@qq.com>",
+    "private": true,
+    "scripts": {
+        "start": "npm run web:dev",
+        "web:dev": "NODE_ENV=development nodemon --watch app -e ts,tsx --exec ts-node --files app/index.ts",
+        "job:dev": "NODE_ENV=development nodemon --watch app -e ts,tsx --exec ts-node --files app/index.ts job",
+        "web": "ts-node --transpile-only app/index.ts",
+        "job": "ts-node --transpile-only app/index.ts job",
+        "web:testing": "NODE_ENV=testing npm run web",
+        "job:testing": "NODE_ENV=testing npm run job",
+        "web:production": "NODE_ENV=production npm run web",
+        "job:prdduction": "NODE_ENV=production npm run job",
+        "lint": "eslint ./app -c .eslintrc.js --ext .ts --fix",
+        "build": "tsc -p tsconfig.json",
+        "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+        "deploy": "pm2 delete krb-web || true && pm2 start --name krb-web ts-node -- -T -P tsconfig.json ./app/index.ts"
+    },
+    "dependencies": {
+        "@koa/cors": "^3.0.0",
+        "cron": "^1.8.2",
+        "dotenv": "^8.2.0",
+        "jsonwebtoken": "^8.5.1",
+        "koa": "^2.11.0",
+        "koa-bodyparser": "^4.2.1",
+        "koa-helmet": "^5.2.0",
+        "koa-router": "^8.0.7",
+        "koa-swagger-decorator": "^1.6.0",
+        "lodash": "^4.17.15",
+        "md5": "^2.2.1",
+        "moment": "^2.24.0",
+        "mysql2": "^2.1.0",
+        "redis": "^3.0.2",
+        "typeorm": "^0.2.22",
+        "uuid": "^7.0.2",
+        "winston": "^3.2.1"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^8.3.5",
+        "@commitlint/config-conventional": "^8.3.4",
+        "@types/cron": "^1.7.1",
+        "@types/jsonwebtoken": "^8.3.8",
+        "@types/koa": "^2.11.1",
+        "@types/koa-bodyparser": "^4.3.0",
+        "@types/koa-helmet": "^3.1.2",
+        "@types/koa__cors": "^3.0.1",
+        "@types/lodash": "^4.14.149",
+        "@types/md5": "^2.1.33",
+        "@types/node": "^13.7.1",
+        "@types/redis": "^2.8.15",
+        "@typescript-eslint/eslint-plugin": "^2.19.2",
+        "@typescript-eslint/parser": "^2.19.2",
+        "eslint": "^6.8.0",
+        "eslint-config-standard": "^14.1.0",
+        "eslint-plugin-import": "^2.20.1",
+        "eslint-plugin-node": "^11.0.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1",
+        "husky": "^4.2.3",
+        "lint-staged": "^10.0.7",
+        "nodemon": "^2.0.2",
+        "prettier": "^1.19.1",
+        "prettier-eslint-cli": "^5.0.0",
+        "ts-node": "^8.6.2",
+        "tsconfig-paths": "^3.9.0",
+        "typescript": "^3.7.5"
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+            "pre-commit": "lint-staged"
+        }
+    },
+    "engines": {
+        "node": ">=10.15.2"
+    }
+}
