@@ -1,5 +1,5 @@
 {
-    "name": "koa-rest-boilerplate",
+    "name": "{{name}}",
     "description": "",
     "version": "0.1.0",
     "main": "index.js",
@@ -19,7 +19,7 @@
         "lint": "eslint ./app -c .eslintrc.js --ext .ts --fix",
         "build": "tsc -p tsconfig.json",
         "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-        "deploy": "pm2 delete krb-web || true && pm2 start --name krb-web ts-node -- -T -P tsconfig.json ./app/index.ts"
+        "deploy": "pm2 delete {{name}}-web || true && pm2 start --name {{name}}-web ts-node -- -T -P tsconfig.json ./app/index.ts"
     },
     "dependencies": {
         "@koa/cors": "^3.0.0",
