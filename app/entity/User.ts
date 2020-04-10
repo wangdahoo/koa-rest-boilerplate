@@ -54,7 +54,7 @@ export class User extends BaseEntity {
     updateTime: Date
 }
 
-export const userLoginSchema = {
+export const userLoginBody = {
     username: { type: 'string', required: true },
-    password: { type: 'string', required: true }
+    password: { type: 'string', required: true, pattern: '^d{4}$', message: '密码格式不正确' }
 }

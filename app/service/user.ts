@@ -51,4 +51,9 @@ export class UserService {
             throw new ApiException('用户名或密码错误')
         }
     }
+
+    async findUser (id: number): Promise<User> {
+        const user = await getManager().findOne(User, id)
+        return user
+    }
 }

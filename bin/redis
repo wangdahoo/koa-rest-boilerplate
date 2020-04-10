@@ -1,0 +1,17 @@
+#!/bin/bash
+. $(pwd)/bin/define
+. $(pwd)/bin/helpers
+
+install_redis() {
+    docker rm -vf $redis_daemon || true
+    docker pull $redis_image
+    docker run --name $redis_daemon -p $redis_port:6379 -d $redis_image
+
+    echo "starting $redis_daemon..."
+    sleep 5
+    # verify_redis_status $redis_daemon
+    echo -e "$redis_daemon started successfully."
+    docker ps -a | grep $redis_daemon
+}
+
+install_redis

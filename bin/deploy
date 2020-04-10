@@ -1,0 +1,13 @@
+#!/bin/bash
+
+deploy() {
+    # 安装依赖
+    yarn
+    # 表结构迁移
+    NODE_ENV=$NODE_ENV npm run typeorm migration:run
+    # 启动 web
+    NODE_ENV=$NODE_ENV npm run deploy
+}
+
+# 检查是否安装了 pm2
+command -v pm2 >/dev/null 2>&1 && deploy || { echo -e "pm2 not installed"; }

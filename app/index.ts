@@ -1,18 +1,20 @@
+import os from 'os'
+import fs from 'fs'
+import path from 'path'
+import cluster from 'cluster'
 import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 import cors from '@koa/cors'
 import helmet from 'koa-helmet'
-import router from './router'
-import config from './config'
 import { createConnection } from 'typeorm'
-import { ScheduleJob, ScheduleJobOptions } from './job'
-import fs from 'fs'
-import path from 'path'
+import config from './config'
+import './controller'
 import { service } from './service'
+import { setupRouter } from './router'
 import { accessLogger, extendedContext, auth } from './middleware'
 import { logger } from './logger'
-import cluster from 'cluster'
-import os from 'os'
+import { ScheduleJob, ScheduleJobOptions } from './job'
+import pkg from '../package.json'
 
 enum ApplicationType {
     Web = 'web',
@@ -69,8 +71,8 @@ export class Application {
         // auth
         app.use(auth)
 
-        // Setup Routes
-        app.use(router.routes()).use(router.allowedMethods())
+        // Setup Router
+        setupRouter(app)
 
         // Setup Error Logger
         app.on('error', (err, ctx) => {
@@ -113,9 +115,7 @@ export class Application {
             .then(async _ => {
                 if (this.appType === ApplicationType.Web) {
                     ;(this.app as Koa).listen(config.web.port)
-                    if (cluster.isMaster) {
-                        logger.info(`========== Web Server Started. Listen on Port: ${config.web.port} ==========\n`)
-                    }
+                    logger.info(`========== Web Server Started. Listen on Port: ${config.web.port} ==========\n`)
                 }
 
                 if (this.appType === ApplicationType.Job) {
@@ -131,10 +131,11 @@ export class Application {
     }
 }
 
+const jobName = process.env.JOB || ''
+const isWeb = !jobName
+
 // 启动程序
 function bootstrap () {
-    const jobName = process.env.JOB || ''
-
     const type = (() => {
         const argv = process.argv
         return argv[argv.length - 1] === ApplicationType.Job && jobName ? ApplicationType.Job : ApplicationType.Web
@@ -152,9 +153,9 @@ function bootstrap () {
 if (process.env.NODE_ENV !== 'development') {
     const cpuNum = os.cpus().length
 
-    if (cluster.isMaster) {
+    if (isWeb && cluster.isMaster) {
         logger.info(`Master ${process.pid} started`)
-        fs.writeFileSync(`${process.cwd()}/venus.pid`, process.pid)
+        fs.writeFileSync(`${process.cwd()}/${pkg.name}.pid`, process.pid)
 
         let up = 0
         for (let i = 0; i < cpuNum; i++) {

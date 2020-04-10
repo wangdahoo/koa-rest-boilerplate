@@ -6,7 +6,7 @@ interface UserInfoBody {
     isSuper: boolean
 }
 
-const excludes: (string | RegExp)[] = ['/', '/ping', /^\/doc/, /^\/user\/login/]
+const excludes: (string | RegExp)[] = ['/', '/ping', /^\/user\/login/]
 
 const inWhiteList = (path: string) => {
     let result = false

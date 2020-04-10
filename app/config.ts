@@ -3,13 +3,13 @@ import { ConnectionOptions } from 'typeorm'
 import { resolve } from 'path'
 import fs from 'fs'
 
-dotenv.config({ path: `./config/.default.env` })
+dotenv.config({ path: './config/.default.env' })
 
 const overrideConfigFile = `${process.cwd()}/config/.${process.env.NODE_ENV || 'development'}.env`
 const overrideConfig = dotenv.parse(fs.readFileSync(overrideConfigFile))
 
 for (const k in overrideConfig) {
-  process.env[k] = overrideConfig[k]
+    process.env[k] = overrideConfig[k]
 }
 
 const isDev = process.env.NODE_ENV === 'development'

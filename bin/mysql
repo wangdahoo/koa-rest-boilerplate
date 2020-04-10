@@ -1,0 +1,29 @@
+#!/bin/bash
+. $(pwd)/bin/define
+. $(pwd)/bin/helpers
+
+install_mysql() {
+    echo -e "[INSTALL MYSQL]"
+    docker rm -vf $mysql_daemon >/dev/null || true >/dev/null
+    # docker pull $mysql_image >/dev/null
+
+    rm -rf $(pwd)/docker_volumes/mysql || true
+    mkdir -p $(pwd)/docker_volumes/mysql
+    docker pull $mysql_image
+    docker run \
+        --name $mysql_daemon \
+        --privileged=true \
+        -e TZ=Asia/Shanghai \
+        -e MYSQL_ROOT_PASSWORD=victory \
+        -v $(pwd)/docker_volumes/mysql:/var/lib/mysql \
+        -p $mysql_port:$mysql_port \
+        -d $mysql_image \
+        --port=$mysql_port
+
+    echo "starting $mysql_daemon..."
+    verify_mysql_status $mysql_daemon
+    echo -e "$mysql_daemon started successfully."
+    docker ps -a | grep $mysql_daemon
+}
+
+install_mysql

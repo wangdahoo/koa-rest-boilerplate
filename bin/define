@@ -1,0 +1,9 @@
+#!/bin/bash
+
+mysql_daemon=krb-mysql
+mysql_image=daocloud.io/library/mysql:5.7.26
+mysql_port=3308
+
+redis_daemon=krb-redis
+redis_image=redis:4.0.2
+redis_port=6380

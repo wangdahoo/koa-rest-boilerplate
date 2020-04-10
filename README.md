@@ -38,7 +38,7 @@
     yarn start
     ```
 
-    > web: [http://localhost:3000](http://localhost:3000), api doc: [http://localhost:3000/doc](http://localhost:3000/doc)
+    > web: [http://localhost:3000](http://localhost:3000)
 
 - 本地开发环境运行 job
 
@@ -52,3 +52,11 @@
     ```bash
     npm run typeorm migration:generate --  -n <YourMigrationName> -f ormconfig.js
     ```
+
+
+## 脚手架
+
+```bash
+npm i -g @wangdahoo/krb-cli
+krb init <projectName>
+```

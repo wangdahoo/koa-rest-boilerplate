@@ -1,16 +1,14 @@
-import { BaseContext } from 'koa'
-import { tagsAll, request, summary } from 'koa-swagger-decorator'
+import { Context } from 'koa'
+import { api, ApiMethod } from '../router'
 
-@tagsAll(['General'])
 export default class GeneralController {
-    @request('get', '/')
-    public static async index (ctx: BaseContext) {
+    @api(ApiMethod.GET, '/')
+    public static async index (ctx: Context) {
         ctx.body = 'OK'
     }
 
-    @request('get', '/ping')
-    @summary('A Ping-Pong echo.')
-    public static async ping (ctx: BaseContext) {
+    @api(ApiMethod.GET, '/ping')
+    public static async ping (ctx: Context) {
         ctx.body = 'Pong!'
     }
 }

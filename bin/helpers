@@ -1,0 +1,37 @@
+#!/bin/bash
+. $(pwd)/bin/define
+
+verify_mysql_status() {
+    echo -ne "verifying $mysql_daemon..."
+
+    passwd=" -p"$mysql_password
+    cmd="docker exec -it "$mysql_daemon" /usr/bin/mysql -f -h127.0.0.1 -P"$mysql_port" -uroot -e 'SELECT 1' | awk 'NR==4 {print \$2}' | sed -n '1, 1p'"
+    # echo -e $cmd
+
+    result=$($cmd)
+    while [[ "" == $result ]]; do
+        sleep 1
+        result=$($cmd)
+        echo -ne '.'
+    done
+
+    echo -ne "ok\n"
+    return 0
+}
+
+verify_redis_status() {
+    echo -ne "verifying $redis_daemon..."
+
+    cmd="docker exec -it "$redis_daemon" /usr/local/bin/redis-cli ping"
+    # echo -e $cmd
+
+    result=$($cmd)
+    while [[ "PONG*" != $result ]]; do
+        sleep 1
+        result=$($cmd)
+        echo -ne '.'
+    done
+
+    echo -ne "ok\n"
+    return 0
+}
