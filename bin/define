@@ -1,8 +1,12 @@
 #!/bin/bash
 
 mysql_daemon=krb-mysql
-mysql_image=daocloud.io/library/mysql:5.7.26
+mysql_image=daocloud.io/library/mysql:5.7.29
 mysql_port=3308
+mysql_root_password=victory
+mysql_database=krb
+mysql_user=admin
+mysql_password=victory
 
 redis_daemon=krb-redis
 redis_image=redis:4.0.2

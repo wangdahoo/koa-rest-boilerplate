@@ -12,13 +12,17 @@ install_mysql() {
     docker pull $mysql_image
     docker run \
         --name $mysql_daemon \
-        --privileged=true \
         -e TZ=Asia/Shanghai \
-        -e MYSQL_ROOT_PASSWORD=victory \
-        -v $(pwd)/docker_volumes/mysql:/var/lib/mysql \
+        -e MYSQL_ROOT_PASSWORD=$mysql_root_password \
+        -e MYSQL_USER=$mysql_user \
+        -e MYSQL_PASSWORD=$mysql_password \
+        -e MYSQL_DATABASE=$mysql_database \
+        -v $(pwd)/docker_volumes/mysql/conf.d:/etc/mysql/conf.d \
         -p $mysql_port:$mysql_port \
         -d $mysql_image \
-        --port=$mysql_port
+        --port=$mysql_port \
+        --character-set-server=utf8mb4 \
+        --collation-server=utf8mb4_unicode_ci
 
     echo "starting $mysql_daemon..."
     verify_mysql_status $mysql_daemon

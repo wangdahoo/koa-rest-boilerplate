@@ -1,4 +1,0 @@
-SET NAMES utf8;
-CREATE DATABASE IF NOT EXISTS `krb` DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
-
-USE krb;

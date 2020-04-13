@@ -1,17 +1,17 @@
 #!/bin/bash
 . $(pwd)/bin/define
 
+ping_mysql () {
+    docker exec -it $mysql_daemon mysql -f -h127.0.0.1 -P$mysql_port -uroot -p$mysql_root_password -e 'SELECT 1' | awk 'NR==5 {print $2}' | sed -n '1, 1p'
+}
+
 verify_mysql_status() {
     echo -ne "verifying $mysql_daemon..."
 
-    passwd=" -p"$mysql_password
-    cmd="docker exec -it "$mysql_daemon" /usr/bin/mysql -f -h127.0.0.1 -P"$mysql_port" -uroot -e 'SELECT 1' | awk 'NR==4 {print \$2}' | sed -n '1, 1p'"
-    # echo -e $cmd
-
-    result=$($cmd)
-    while [[ "" == $result ]]; do
+    result=""
+    while [[ "1" != $result ]]; do
         sleep 1
-        result=$($cmd)
+        result=$(ping_mysql)
         echo -ne '.'
     done
 
@@ -26,9 +26,11 @@ verify_redis_status() {
     # echo -e $cmd
 
     result=$($cmd)
+    # echo $result
     while [[ "PONG*" != $result ]]; do
         sleep 1
         result=$($cmd)
+        # echo $result
         echo -ne '.'
     done
 
