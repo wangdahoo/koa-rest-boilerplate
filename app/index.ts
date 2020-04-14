@@ -127,7 +127,7 @@ export class Application {
                     await this.ready()
                 }
             })
-            .catch(e => console.log('error: ', e))
+            .catch(e => console.error(e))
     }
 }
 

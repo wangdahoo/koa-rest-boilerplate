@@ -9,6 +9,16 @@ redis:
 deploy:
 	@./bin/ne ./bin/deploy
 
+docker:
+	@make docker.build
+	@make docker.run
+
+docker.build:
+	@./bin/docker_build
+
+docker.run:
+	@./bin/docker_run
+
 help:
 	@echo 'Usage: make <command>'
 	@echo ' '
