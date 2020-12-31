@@ -52,11 +52,3 @@
     ```bash
     npm run typeorm migration:generate --  -n <YourMigrationName> -f ormconfig.js
     ```
-
-
-## 脚手架
-
-```bash
-npm i -g @wangdahoo/krb-cli
-krb init <projectName>
-```

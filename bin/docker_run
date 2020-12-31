@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker rm -f my-krb-app || true
-docker run --name my-krb-app -p 8000:8000 -d krb-app
+docker rm -f {{name}}-app || true
+docker run --name {{name}}-app -p 8000:8000 -d {{name}}

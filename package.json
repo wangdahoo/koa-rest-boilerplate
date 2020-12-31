@@ -3,8 +3,8 @@
     "description": "",
     "version": "0.1.0",
     "main": "index.js",
-    "repository": "git@github.com:wangdahoo/koa-rest-boilerplate.git",
-    "author": "王大虎 <157195705@qq.com>",
+    "repository": "",
+    "author": "",
     "private": true,
     "scripts": {
         "start": "npm run web:dev",
