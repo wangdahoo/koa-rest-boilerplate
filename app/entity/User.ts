@@ -3,7 +3,6 @@ import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, U
 @Entity({
     name: 'user'
 })
-@Index(['username', 'isActive', 'createTime', 'updateTime'])
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn({
         comment: '用户 id'
@@ -17,6 +16,7 @@ export class User extends BaseEntity {
         default: '',
         comment: '用户名'
     })
+    @Index('idx_username')
     username: string
 
     @Column({
@@ -56,5 +56,10 @@ export class User extends BaseEntity {
 
 export const userLoginBody = {
     username: { type: 'string', required: true },
-    password: { type: 'string', required: true, pattern: '^d{4}$', message: '密码格式不正确' }
+    password: {
+        type: 'string',
+        required: true,
+        pattern: '^[A-Za-zd_,.?/!\\@#$%^&*()-=+~|]{4,20}$',
+        message: '密码格式不正确'
+    }
 }
