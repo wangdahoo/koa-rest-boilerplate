@@ -31,7 +31,7 @@
         "koa-bodyparser": "^4.2.1",
         "koa-helmet": "^5.2.0",
         "koa-router": "^8.0.7",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.21",
         "md5": "^2.2.1",
         "moment": "^2.24.0",
         "mysql2": "^2.1.0",
